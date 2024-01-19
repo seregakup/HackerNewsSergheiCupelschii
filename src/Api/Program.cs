@@ -1,4 +1,5 @@
 using Api.Infrastructure.ExternalApi;
+using Api.Services;
 using Carter;
 using Refit;
 
@@ -13,6 +14,8 @@ builder.Services.AddCarter();
 
 builder.Services.AddRefitClient<IHackerNewsApi>().ConfigureHttpClient(
     c => c.BaseAddress = new Uri(builder.Configuration["HackerNewsBaseApi"]!));
+
+builder.Services.AddScoped<IHackerNewsService, HackerNewsService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
