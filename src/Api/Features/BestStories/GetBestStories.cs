@@ -121,7 +121,7 @@ public class GetBestNewsEndpoint : ICarterModule
                 {
                     if (amountOfItems is < 1 or > 500)
                     {
-                        throw new ArgumentOutOfRangeException(nameof(app),
+                        throw new ArgumentOutOfRangeException(nameof(amountOfItems),
                             message: "Amount of items must be between 1 and 500");
                     }
 
