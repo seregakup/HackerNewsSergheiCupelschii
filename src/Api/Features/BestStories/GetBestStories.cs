@@ -114,7 +114,7 @@ public class GetBestNewsEndpoint : ICarterModule
     /// <param name="app"></param>
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("api/best-news", async (ISender sender, [FromQuery] int amountOfItems = 25)
+        app.MapGet("api/news-management/best-news", async (ISender sender, [FromQuery] int amountOfItems = 25)
                 =>
             {
                 var result = await sender.Send(new GetBestStories.Query { AmountOfItems = amountOfItems });
