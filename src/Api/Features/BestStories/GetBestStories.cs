@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+using System.Net;
 using Api.Domain.Items;
 using Api.Services;
 using Carter;
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Features.BestStories;
@@ -33,49 +36,49 @@ public static class GetBestStories
         /// </summary>
         /// <example>dhouston</example>
         public required string By { get; init; }
-        
+
         /// <summary>
         /// In the case of stories or polls, the total comment count.
         /// </summary>
         /// <example>16</example>
         public int Descendants { get; init; }
-        
+
         /// <summary>
         /// The item's unique id
         /// </summary>
         /// <example>8863</example>
         public int Id { get; init; }
-        
+
         /// <summary>
         /// The ids of the item's comments, in ranked display order.
         /// </summary>
         /// <example>[ 2922097, 2922429, 2924562 ]</example>
         public int[]? Kids { get; init; }
-       
+
         /// <summary>
         /// The story's score, or the votes for a pollopt.
         /// </summary>
         /// <example>111</example>
         public int Score { get; init; }
-        
+
         /// <summary>
         /// The comment, story or poll text. HTML.
         /// </summary>
         /// <example> Some text</example>
         public string? Text { get; init; }
-        
+
         /// <summary>
         /// Creation date of the item, in Unix Time.
         /// </summary>
         /// <example>1314211127</example>
         public int Time { get; init; }
-        
+
         /// <summary>
         /// The title of the story, poll or job. HTML.
         /// </summary>
         /// <example> Some text</example>
         public required string Title { get; init; }
-        
+
         /// <summary>
         /// The type of item. One of "job", "story", "comment", "poll", or "pollopt".
         /// </summary>
@@ -84,7 +87,8 @@ public static class GetBestStories
     }
 
 
-    internal sealed class Handler(IHackerNewsService hackerNewsService) : IRequestHandler<Query, IReadOnlyList<BestStoriesResponse>>
+    internal sealed class Handler(IHackerNewsService hackerNewsService)
+        : IRequestHandler<Query, IReadOnlyList<BestStoriesResponse>>
     {
         public async Task<IReadOnlyList<BestStoriesResponse>> Handle(Query request, CancellationToken cancellationToken)
         {
@@ -114,14 +118,22 @@ public class GetBestNewsEndpoint : ICarterModule
     /// <param name="app"></param>
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("api/news-management/best-news", async (ISender sender, [FromQuery] int amountOfItems = 25)
-                =>
-            {
-                var result = await sender.Send(new GetBestStories.Query { AmountOfItems = amountOfItems });
-                return result;
-            })
+        app.MapGet("api/news-management/best-news",
+                async Task<Results<BadRequest, Ok<IReadOnlyList<GetBestStories.BestStoriesResponse>>>> (ISender sender, [FromQuery]int amountOfItems = 25)
+                    =>
+                {
+                    if (amountOfItems is < 1 or > 500)
+                    {
+                        return TypedResults.BadRequest();
+                    }
+                    
+                    var result = await sender.Send(new GetBestStories.Query { AmountOfItems = amountOfItems });
+                    
+                    return TypedResults.Ok(result);
+                })
             .Produces<IReadOnlyList<GetBestStories.BestStoriesResponse>>()
             .Produces(StatusCodes.Status500InternalServerError)
+            .Produces(StatusCodes.Status400BadRequest)
             .WithSummary("Returns certain amounts of the best stories from the HackerNews API")
             .WithOpenApi();
     }
