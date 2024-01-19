@@ -1,4 +1,6 @@
+using Api.Infrastructure.ExternalApi;
 using Carter;
+using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,9 @@ builder.Services.AddMediatR(config =>
     config.RegisterServicesFromAssembly(assembly));
 
 builder.Services.AddCarter();
+
+builder.Services.AddRefitClient<IHackerNewsApi>().ConfigureHttpClient(
+    c => c.BaseAddress = new Uri(builder.Configuration["HackerNewsBaseApi"]!));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
