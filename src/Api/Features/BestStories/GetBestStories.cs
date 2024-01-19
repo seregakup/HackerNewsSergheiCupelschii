@@ -122,7 +122,7 @@ public class GetBestNewsEndpoint : ICarterModule
             })
             .Produces<IReadOnlyList<GetBestStories.BestStoriesResponse>>()
             .Produces(StatusCodes.Status500InternalServerError)
-            .WithSummary("Returns the best news from HackerNews API")
+            .WithSummary("Returns certain amounts of the best stories from the HackerNews API")
             .WithOpenApi();
     }
 }
