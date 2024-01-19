@@ -1,3 +1,4 @@
+using Api.Domain.Items;
 using Api.Services;
 using Carter;
 using MediatR;
@@ -94,7 +95,10 @@ public static class GetBestStories
                 return new List<BestStoriesResponse>(0);
             }
 
-            return bestStories.Take(request.AmountOfItems).ToList();
+            return bestStories
+                .Where(bs => bs.Type.Equals(ItemType.Story.ToString(), StringComparison.CurrentCultureIgnoreCase))
+                .Take(request.AmountOfItems)
+                .ToList();
         }
     }
 }
