@@ -19,4 +19,10 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Domain\" />
+      <Folder Include="Features\Items\" />
+      <Folder Include="Infrastructure\" />
+    </ItemGroup>
+
 </Project>
