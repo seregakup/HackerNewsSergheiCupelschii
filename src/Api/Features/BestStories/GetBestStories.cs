@@ -1,10 +1,7 @@
-using System.ComponentModel.DataAnnotations;
-using System.Net;
 using Api.Domain.Items;
 using Api.Services;
 using Carter;
 using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Features.BestStories;
@@ -119,17 +116,18 @@ public class GetBestNewsEndpoint : ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapGet("api/news-management/best-news",
-                async Task<Results<BadRequest, Ok<IReadOnlyList<GetBestStories.BestStoriesResponse>>>> (ISender sender, [FromQuery]int amountOfItems = 25)
+                async (ISender sender, [FromQuery] int amountOfItems = 25)
                     =>
                 {
                     if (amountOfItems is < 1 or > 500)
                     {
-                        return TypedResults.BadRequest();
+                        throw new ArgumentOutOfRangeException(nameof(app),
+                            message: "Amount of items must be between 1 and 500");
                     }
-                    
+
                     var result = await sender.Send(new GetBestStories.Query { AmountOfItems = amountOfItems });
-                    
-                    return TypedResults.Ok(result);
+
+                    return result;
                 })
             .Produces<IReadOnlyList<GetBestStories.BestStoriesResponse>>()
             .Produces(StatusCodes.Status500InternalServerError)

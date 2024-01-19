@@ -1,3 +1,4 @@
+using Api.ExceptionHandlers;
 using Api.Infrastructure.ExternalApi;
 using Api.Services;
 using Carter;
@@ -11,6 +12,10 @@ builder.Services.AddMediatR(config =>
     config.RegisterServicesFromAssembly(assembly));
 
 builder.Services.AddCarter();
+
+builder.Services.AddExceptionHandler<BadRequestExceptionHandler>();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 builder.Services.AddRefitClient<IHackerNewsApi>().ConfigureHttpClient(
     c => c.BaseAddress = new Uri(builder.Configuration["HackerNewsBaseApi"]!));
@@ -26,6 +31,7 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+app.UseExceptionHandler();
 
 if (app.Environment.IsDevelopment())
 {
