@@ -137,7 +137,7 @@ public class GetBestNewsEndpoint : ICarterModule
 
                     return result;
                 })
-          //  .Produces<IReadOnlyList<GetBestStories.BestStoriesResponse>>()
+            .Produces<IReadOnlyList<GetBestStories.BestStoriesResponse>>()
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError)
             .WithSummary("Returns certain amounts of the best stories from the HackerNews API")
