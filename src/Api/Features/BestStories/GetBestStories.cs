@@ -117,7 +117,7 @@ public class GetBestNewsEndpoint : ICarterModule
     /// <summary>
     /// Add the routes for getting items
     /// </summary>
-    /// <param name="app"></param>
+    /// <param name="app">IEndpointRouteBuilder</param>
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapGet("api/news-management/best-news",
