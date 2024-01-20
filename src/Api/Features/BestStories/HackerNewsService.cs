@@ -44,11 +44,11 @@ public class HackerNewsService(
 
         if (changedItems.Items is { Count: > 0 })
         {
-            stories = await CheckCacheAsync(bestStoriesIdsToProcess, changedItems.Items);
+            stories = await CheckCacheAsync(bestStoriesIdsToProcess, changedItems.Items, cancellationToken);
         }
         else
         {
-            stories = await CheckCacheAsync(bestStoriesIdsToProcess);
+            stories = await CheckCacheAsync(bestStoriesIdsToProcess, cancellationToken: cancellationToken);
         }
 
         if (!AreAllItemStories(stories))
@@ -61,8 +61,10 @@ public class HackerNewsService(
         return outputStories.OrderByDescending(s => s.Score).ToList();
     }
 
-    private async Task<Item[]> CheckCacheAsync(IReadOnlyList<int> storiesIds,
-        IReadOnlyList<int>? changedItemsIds = null)
+    private async Task<Item[]> CheckCacheAsync(
+        IReadOnlyList<int> storiesIds,
+        IReadOnlyList<int>? changedItemsIds = null,
+        CancellationToken cancellationToken = default)
     {
         var stories = new ConcurrentBag<Item>();
         var tasks = new List<Task>();
@@ -71,7 +73,7 @@ public class HackerNewsService(
         {
             tasks.AddRange(storiesIds.Select(async storyId =>
             {
-                var story = await cacheService.GetStoryFromCacheOrFromApiAsync(storyId, new CancellationToken());
+                var story = await cacheService.GetStoryFromCacheOrFromApiAsync(storyId, cancellationToken);
                 stories.Add(story);
             }));
 
@@ -86,13 +88,13 @@ public class HackerNewsService(
         {
             tasks.AddRange(updatedStoriesIds.Select(async storyId =>
             {
-                var story = await cacheService.GetStoryFromCacheOrFromApiAsync(storyId, new CancellationToken(), true);
+                var story = await cacheService.GetStoryFromCacheOrFromApiAsync(storyId, cancellationToken, true);
                 stories.Add(story);
             }));
 
             tasks.AddRange(storiesIds.Except(updatedStoriesIds).Select(async storyId =>
             {
-                var story = await cacheService.GetStoryFromCacheOrFromApiAsync(storyId, new CancellationToken());
+                var story = await cacheService.GetStoryFromCacheOrFromApiAsync(storyId, cancellationToken);
                 stories.Add(story);
             }));
         }
@@ -100,7 +102,7 @@ public class HackerNewsService(
         {
             tasks.AddRange(storiesIds.Select(async storyId =>
             {
-                var story = await cacheService.GetStoryFromCacheOrFromApiAsync(storyId, new CancellationToken());
+                var story = await cacheService.GetStoryFromCacheOrFromApiAsync(storyId, cancellationToken);
                 stories.Add(story);
             }));
         }
