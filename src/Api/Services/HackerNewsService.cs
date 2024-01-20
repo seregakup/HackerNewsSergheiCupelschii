@@ -12,19 +12,28 @@ public class HackerNewsService(IHackerNewsApi hackerNewsApi, IMapper mapper) : I
     /// <summary>
     /// Returns the best news sorted by score
     /// </summary>
+    /// <param name="amountOfItems">Amount of items to return</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>A collection of sorted best news</returns>
-    public async Task<IReadOnlyList<GetBestStories.BestStoriesResponse>> GetSortedBestNewsByScoreAsync(
+    public async Task<IReadOnlyList<GetBestStories.BestStoriesResponse>> GetSortedByScoreAmountOfBestNewsAsync(
+        int amountOfItems,
         CancellationToken cancellationToken)
     {
-        var bestStories = await hackerNewsApi.GetBestStoriesAsync(cancellationToken);
+        if (amountOfItems is < 1 or > 500)
+        {
+            throw new ArgumentOutOfRangeException(nameof(amountOfItems), message: "Amount of items must be between 1 and 500");
+        }
+        
+        var bestStoriesIds = await hackerNewsApi.GetBestStoriesIdsAsync(cancellationToken);
 
-        if (bestStories.Length == 0)
+        if (bestStoriesIds.Length == 0)
         {
             return new List<GetBestStories.BestStoriesResponse>(0);
         }
+        
+        var bestStoriesIdsToProcess = bestStoriesIds.Take(amountOfItems).ToList();
 
-        var tasks = bestStories.Select(async storyId =>
+        var tasks = bestStoriesIdsToProcess.Select(async storyId =>
         {
             var story = await hackerNewsApi.GetItemByIdAsync(storyId, cancellationToken);
             return story;

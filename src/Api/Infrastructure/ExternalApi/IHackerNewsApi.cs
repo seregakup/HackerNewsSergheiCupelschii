@@ -14,7 +14,7 @@ public interface IHackerNewsApi
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>A collection of the best stories' ids</returns>
     [Get("/v0/beststories.json")]
-    Task<int[]> GetBestStoriesAsync(CancellationToken cancellationToken);
+    Task<int[]> GetBestStoriesIdsAsync(CancellationToken cancellationToken);
 
     /// <summary>
     /// Get a item by its id from the Hacker News API

@@ -83,7 +83,6 @@ public static class GetBestStories
         public required string Type { get; init; }
     }
 
-
     internal sealed class Handler(IHackerNewsService hackerNewsService)
         : IRequestHandler<Query, IReadOnlyList<BestStoriesResponse>>
     {
@@ -91,7 +90,9 @@ public static class GetBestStories
             Query request,
             CancellationToken cancellationToken)
         {
-            var bestStories = await hackerNewsService.GetSortedBestNewsByScoreAsync(cancellationToken);
+            var amountOfItems = request.AmountOfItems;
+            
+            var bestStories = await hackerNewsService.GetSortedByScoreAmountOfBestNewsAsync(amountOfItems, cancellationToken);
 
             if (bestStories.Count == 0)
             {
@@ -100,7 +101,6 @@ public static class GetBestStories
 
             return bestStories
                 .Where(bs => bs.Type.Equals(ItemType.Story.ToString(), StringComparison.CurrentCultureIgnoreCase))
-                .Take(request.AmountOfItems)
                 .ToList();
         }
     }
