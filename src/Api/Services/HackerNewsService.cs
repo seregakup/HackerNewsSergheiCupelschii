@@ -54,6 +54,6 @@ public class HackerNewsService(IHackerNewsApi hackerNewsApi, IMapper mapper) : I
 
     private static bool AreAllItemStories(IEnumerable<Item> stories)
     {
-        return !stories.Any(s => !s.Type.Equals(ItemType.Story.ToString(), StringComparison.CurrentCultureIgnoreCase));
+        return stories.All(s => s.Type.Equals(ItemType.Story.ToString(), StringComparison.CurrentCultureIgnoreCase));
     }
 }
