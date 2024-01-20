@@ -22,24 +22,12 @@ public class Item
     /// </summary>
     /// <example>8863</example>
     public int Id { get; init; }
-        
-    /// <summary>
-    /// The ids of the item's comments, in ranked display order.
-    /// </summary>
-    /// <example>[ 2922097, 2922429, 2924562 ]</example>
-    public int[]? Kids { get; init; }
-       
+
     /// <summary>
     /// The story's score, or the votes for a pollopt.
     /// </summary>
     /// <example>111</example>
     public int Score { get; init; }
-        
-    /// <summary>
-    /// The comment, story or poll text. HTML.
-    /// </summary>
-    /// <example> Some text</example>
-    public string? Text { get; init; }
         
     /// <summary>
     /// Creation date of the item, in Unix Time.
@@ -58,4 +46,10 @@ public class Item
     /// </summary>
     /// <example>story</example>
     public required string Type { get; init; }
+
+    /// <summary>
+    /// Url
+    /// </summary>
+    /// <example>https://www.google.com</example>
+    public string? Url { get; set; }
 }

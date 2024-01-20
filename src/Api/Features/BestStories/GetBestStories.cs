@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text.Json.Serialization;
 using Api.Domain.Items;
 using Api.ResponseExamples;
 using Api.Services;
@@ -35,26 +36,14 @@ public static class GetBestStories
         /// The username of the item's author.
         /// </summary>
         /// <example>dhouston</example>
-        public required string By { get; init; }
+        public required string PostedBy { get; init; }
 
         /// <summary>
-        /// In the case of stories or polls, the total comment count.
+        /// The total comment count.
         /// </summary>
         /// <example>16</example>
-        public int Descendants { get; init; }
-
-        /// <summary>
-        /// The item's unique id
-        /// </summary>
-        /// <example>8863</example>
-        public int Id { get; init; }
-
-        /// <summary>
-        /// The ids of the item's comments, in ranked display order.
-        /// </summary>
-        /// <example>[ 2922097, 2922429, 2924562 ]</example>
-        public int[]? Kids { get; init; }
-
+        public int CommentCount { get; init; }
+      
         /// <summary>
         /// The story's score, or the votes for a pollopt.
         /// </summary>
@@ -62,28 +51,22 @@ public static class GetBestStories
         public int Score { get; init; }
 
         /// <summary>
-        /// The comment, story or poll text. HTML.
+        /// Creation date of the item in UTC.
         /// </summary>
-        /// <example> Some text</example>
-        public string? Text { get; init; }
-
-        /// <summary>
-        /// Creation date of the item, in Unix Time.
-        /// </summary>
-        /// <example>1314211127</example>
-        public int Time { get; init; }
+        /// <example>2021-10-10T10:10:10+00:00</example>
+        public DateTime Time { get; init; }
 
         /// <summary>
         /// The title of the story, poll or job. HTML.
         /// </summary>
-        /// <example> Some text</example>
+        /// <example>Some text</example>
         public required string Title { get; init; }
-
+        
         /// <summary>
-        /// The type of item. One of "job", "story", "comment", "poll", or "pollopt".
+        /// Url
         /// </summary>
-        /// <example>story</example>
-        public required string Type { get; init; }
+        /// <example>https://www.google.com</example>
+        public Uri? Uri { get; init; }
     }
 
     internal sealed class Handler(IHackerNewsService hackerNewsService)
@@ -102,9 +85,7 @@ public static class GetBestStories
                 return new List<BestStoriesResponse>(0);
             }
 
-            return bestStories
-                .Where(bs => bs.Type.Equals(ItemType.Story.ToString(), StringComparison.CurrentCultureIgnoreCase))
-                .ToList();
+            return bestStories;
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Globalization;
 using Api.Features.BestStories;
 using Swashbuckle.AspNetCore.Filters;
 
@@ -16,15 +17,12 @@ public class MessageBodyOkExample : IExamplesProvider<GetBestStories.BestStories
     {
         return new GetBestStories.BestStoriesResponse
         {
-            By = "dhouston",
-            Descendants = 16,
-            Id = 8863,
-            Kids = [2922097, 2922429, 2924562],
+            PostedBy = "dhouston",
+            CommentCount = 16,
             Score = 111,
-            Text = "Some text",
-            Time = 1314211127,
+            Time = DateTime.ParseExact("2021-10-10T10:10:10+00:00", "yyyy-MM-ddTHH:mm:ss+00:00", CultureInfo.InvariantCulture),
             Title = "Some text",
-            Type = "story"
+            Uri = new Uri("https://www.google.com")
         };
     }
 }
