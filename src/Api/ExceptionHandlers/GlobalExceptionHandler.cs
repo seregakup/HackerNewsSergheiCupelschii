@@ -11,7 +11,9 @@ internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> log
         CancellationToken cancellationToken)
     {
         logger.LogError(
-            exception, "Exception occurred: {Message}", exception.Message);
+            exception, 
+            "Exception occurred: {Message}",
+            exception.Message);
 
         var problemDetails = new ProblemDetails
         {

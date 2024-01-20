@@ -87,7 +87,9 @@ public static class GetBestStories
     internal sealed class Handler(IHackerNewsService hackerNewsService)
         : IRequestHandler<Query, IReadOnlyList<BestStoriesResponse>>
     {
-        public async Task<IReadOnlyList<BestStoriesResponse>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<IReadOnlyList<BestStoriesResponse>> Handle(
+            Query request,
+            CancellationToken cancellationToken)
         {
             var bestStories = await hackerNewsService.GetSortedBestNewsByScoreAsync(cancellationToken);
 
