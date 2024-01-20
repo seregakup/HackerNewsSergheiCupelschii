@@ -1,8 +1,11 @@
+using System.Net;
 using Api.Domain.Items;
+using Api.ResponseExamples;
 using Api.Services;
 using Carter;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace Api.Features.BestStories;
 
@@ -118,6 +121,9 @@ public class GetBestNewsEndpoint : ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapGet("api/news-management/best-news",
+                [SwaggerResponseExample((int)HttpStatusCode.OK, typeof(MessageBodyOkExample))] 
+                [SwaggerResponseExample((int)HttpStatusCode.BadRequest, typeof(MessageBodyBadRequestExample))]
+                [SwaggerResponseExample((int)HttpStatusCode.InternalServerError, typeof(MessageBodyInternalServerErrorExample))]
                 async (ISender sender, [FromQuery] int amountOfItems = 25)
                     =>
                 {
@@ -131,9 +137,9 @@ public class GetBestNewsEndpoint : ICarterModule
 
                     return result;
                 })
-            .Produces<IReadOnlyList<GetBestStories.BestStoriesResponse>>()
-            .Produces(StatusCodes.Status500InternalServerError)
+          //  .Produces<IReadOnlyList<GetBestStories.BestStoriesResponse>>()
             .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status500InternalServerError)
             .WithSummary("Returns certain amounts of the best stories from the HackerNews API")
             .WithOpenApi();
     }
