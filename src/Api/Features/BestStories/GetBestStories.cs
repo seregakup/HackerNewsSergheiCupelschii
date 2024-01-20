@@ -2,7 +2,6 @@ using System.Net;
 using System.Text.Json.Serialization;
 using Api.Domain.Items;
 using Api.ResponseExamples;
-using Api.Services;
 using Carter;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

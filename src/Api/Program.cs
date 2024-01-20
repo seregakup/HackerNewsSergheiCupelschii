@@ -1,7 +1,8 @@
 using System.Reflection;
 using Api.ExceptionHandlers;
+using Api.Features.BestStories;
+using Api.Infrastructure.Cache;
 using Api.Infrastructure.ExternalApi;
-using Api.Services;
 using Carter;
 using Refit;
 using Swashbuckle.AspNetCore.Filters;
@@ -23,6 +24,7 @@ builder.Services.AddRefitClient<IHackerNewsApi>().ConfigureHttpClient(
     c => c.BaseAddress = new Uri(builder.Configuration["HackerNewsBaseApi"]!));
 
 builder.Services.AddScoped<IHackerNewsService, HackerNewsService>();
+builder.Services.AddScoped<ICacheService, CacheService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -32,6 +34,8 @@ builder.Services.AddSwaggerGen(c =>
     c.ExampleFilters();
 });
 builder.Services.AddSwaggerExamplesFromAssemblies(Assembly.GetEntryAssembly());
+
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 

@@ -1,6 +1,4 @@
-using Api.Features.BestStories;
-
-namespace Api.Services;
+namespace Api.Features.BestStories;
 
 /// <summary>
 /// Interface for the Hacker News Service
