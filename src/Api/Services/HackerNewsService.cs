@@ -1,3 +1,4 @@
+using Api.Domain.Items;
 using Api.Features.BestStories;
 using Api.Infrastructure.ExternalApi;
 using AutoMapper;
@@ -41,8 +42,18 @@ public class HackerNewsService(IHackerNewsApi hackerNewsApi, IMapper mapper) : I
 
         var stories = await Task.WhenAll(tasks);
 
+        if (!AreAllItemStories(stories))
+        {
+            throw new InvalidOperationException("Not all items are stories");
+        }
+
         var outputStories = mapper.Map<List<GetBestStories.BestStoriesResponse>>(stories);
 
         return outputStories.OrderByDescending(s => s.Score).ToList();
+    }
+
+    private static bool AreAllItemStories(IEnumerable<Item> stories)
+    {
+        return !stories.Any(s => !s.Type.Equals(ItemType.Story.ToString(), StringComparison.CurrentCultureIgnoreCase));
     }
 }
