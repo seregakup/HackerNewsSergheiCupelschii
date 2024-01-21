@@ -37,7 +37,7 @@ public class HackerNewsService(
             return new List<GetBestStories.BestStoriesResponse>(0);
         }
 
-        Item[] stories;
+        Item?[] stories;
 
         var bestStoriesIdsToProcess = bestStoriesIds.Take(amountOfItems).ToList();
         var changedItems = await hackerNewsApi.GetChangedItemsAsync(cancellationToken);
@@ -61,12 +61,12 @@ public class HackerNewsService(
         return outputStories.OrderByDescending(s => s.Score).ToList();
     }
 
-    private async Task<Item[]> CheckCacheAsync(
+    private async Task<Item?[]> CheckCacheAsync(
         IReadOnlyList<int> storiesIds,
         IReadOnlyList<int>? changedItemsIds = null,
         CancellationToken cancellationToken = default)
     {
-        var stories = new ConcurrentBag<Item>();
+        var stories = new ConcurrentBag<Item?>();
         var tasks = new List<Task>();
 
         if (changedItemsIds is null)
@@ -112,8 +112,8 @@ public class HackerNewsService(
         return stories.ToArray();
     }
 
-    private static bool AreAllItemStories(IEnumerable<Item> stories)
+    private static bool AreAllItemStories(IEnumerable<Item?> stories)
     {
-        return stories.All(s => s.Type.Equals(ItemType.Story.ToString(), StringComparison.CurrentCultureIgnoreCase));
+        return stories.All(s => s != null && s.Type.Equals(ItemType.Story.ToString(), StringComparison.CurrentCultureIgnoreCase));
     }
 }

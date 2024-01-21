@@ -1,6 +1,4 @@
 using System.Net;
-using System.Text.Json.Serialization;
-using Api.Domain.Items;
 using Api.ResponseExamples;
 using Carter;
 using MediatR;

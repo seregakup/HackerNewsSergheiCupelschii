@@ -13,6 +13,6 @@ public interface ICacheService
     /// <param name="storyId">Id of the story</param>
     /// <param name="cancellationToken">Cancellation token</param>
     /// <param name="skipCache">Skip the cache and get the story from the API (for the updated stories)</param>
-    /// <returns></returns>
-    Task<Item> GetStoryFromCacheOrFromApiAsync(int storyId, CancellationToken cancellationToken, bool skipCache = false);
+    /// <returns>Story</returns>
+    Task<Item?> GetStoryFromCacheOrFromApiAsync(int storyId, CancellationToken cancellationToken, bool skipCache = false);
 }
