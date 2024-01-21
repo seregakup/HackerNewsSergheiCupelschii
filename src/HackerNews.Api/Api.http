@@ -1,0 +1,6 @@
+@Api_HostAddress = https://localhost:7091
+
+GET {{Api_HostAddress}}/api/news-management/best-news?amountOfItems=500
+Accept: application/json
+
+###
