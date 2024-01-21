@@ -1,4 +1,4 @@
-namespace Api.Domain.Items;
+namespace HackerNews.Api.Domain.Items;
 
 /// <summary>
 /// Type of the item

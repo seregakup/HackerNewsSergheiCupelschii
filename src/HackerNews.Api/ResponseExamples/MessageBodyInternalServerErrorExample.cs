@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Filters;
 
-namespace Api.ResponseExamples;
+namespace HackerNews.Api.ResponseExamples;
 
 /// <summary>
 /// Message body for internal server error

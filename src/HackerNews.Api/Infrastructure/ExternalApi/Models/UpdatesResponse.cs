@@ -1,4 +1,4 @@
-namespace Api.Infrastructure.ExternalApi.Models;
+namespace HackerNews.Api.Infrastructure.ExternalApi.Models;
 
 /// <summary>
 /// Response for updates

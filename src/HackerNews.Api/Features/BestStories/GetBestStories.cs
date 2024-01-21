@@ -1,11 +1,11 @@
 using System.Net;
-using Api.ResponseExamples;
 using Carter;
+using HackerNews.Api.ResponseExamples;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Filters;
 
-namespace Api.Features.BestStories;
+namespace HackerNews.Api.Features.BestStories;
 
 /// <summary>
 /// GetBestStories feature

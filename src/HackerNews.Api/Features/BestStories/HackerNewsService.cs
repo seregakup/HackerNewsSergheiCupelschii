@@ -1,9 +1,9 @@
 using System.Collections.Concurrent;
-using Api.Domain.Items;
-using Api.Infrastructure.ExternalApi;
 using AutoMapper;
+using HackerNews.Api.Domain.Items;
+using HackerNews.Api.Infrastructure.ExternalApi;
 
-namespace Api.Features.BestStories;
+namespace HackerNews.Api.Features.BestStories;
 
 /// <summary>
 /// Service for the Hacker News API

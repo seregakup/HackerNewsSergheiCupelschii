@@ -1,9 +1,9 @@
 using System.Reflection;
-using Api.ExceptionHandlers;
-using Api.Features.BestStories;
-using Api.Infrastructure.Cache;
-using Api.Infrastructure.ExternalApi;
 using Carter;
+using HackerNews.Api.ExceptionHandlers;
+using HackerNews.Api.Features.BestStories;
+using HackerNews.Api.Infrastructure.Cache;
+using HackerNews.Api.Infrastructure.ExternalApi;
 using Refit;
 using Swashbuckle.AspNetCore.Filters;
 

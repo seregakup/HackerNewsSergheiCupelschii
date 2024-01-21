@@ -1,8 +1,8 @@
 using System.Globalization;
-using Api.Features.BestStories;
+using HackerNews.Api.Features.BestStories;
 using Swashbuckle.AspNetCore.Filters;
 
-namespace Api.ResponseExamples;
+namespace HackerNews.Api.ResponseExamples;
 
 /// <summary>
 /// Message body for ok

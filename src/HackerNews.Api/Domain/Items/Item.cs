@@ -1,4 +1,4 @@
-namespace Api.Domain.Items;
+namespace HackerNews.Api.Domain.Items;
 
 /// <summary>
 /// Model fot the item from the Hacker News API

@@ -1,8 +1,8 @@
-using Api.Domain.Items;
-using Api.Infrastructure.ExternalApi.Models;
+using HackerNews.Api.Domain.Items;
+using HackerNews.Api.Infrastructure.ExternalApi.Models;
 using Refit;
 
-namespace Api.Infrastructure.ExternalApi;
+namespace HackerNews.Api.Infrastructure.ExternalApi;
 
 /// <summary>
 /// Interface for the Hacker News API

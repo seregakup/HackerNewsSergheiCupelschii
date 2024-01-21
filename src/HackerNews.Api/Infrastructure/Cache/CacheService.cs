@@ -1,9 +1,9 @@
-using Api.Domain.Items;
-using Api.Features.BestStories;
-using Api.Infrastructure.ExternalApi;
+using HackerNews.Api.Domain.Items;
+using HackerNews.Api.Features.BestStories;
+using HackerNews.Api.Infrastructure.ExternalApi;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Api.Infrastructure.Cache;
+namespace HackerNews.Api.Infrastructure.Cache;
 
 /// <summary>
 /// Cache service

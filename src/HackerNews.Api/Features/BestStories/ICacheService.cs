@@ -1,6 +1,6 @@
-using Api.Domain.Items;
+using HackerNews.Api.Domain.Items;
 
-namespace Api.Features.BestStories;
+namespace HackerNews.Api.Features.BestStories;
 
 /// <summary>
 /// Interface for the cache service

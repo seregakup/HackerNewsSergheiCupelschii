@@ -1,8 +1,8 @@
-using Api.Domain.Items;
-using Api.Features.BestStories;
 using AutoMapper;
+using HackerNews.Api.Domain.Items;
+using HackerNews.Api.Features.BestStories;
 
-namespace Api.Mapping;
+namespace HackerNews.Api.Mapping;
 
 /// <summary>
 /// Hacker News Profile
