@@ -54,3 +54,9 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+/// <summary>
+/// For tests
+/// </summary>
+public partial class Program;
