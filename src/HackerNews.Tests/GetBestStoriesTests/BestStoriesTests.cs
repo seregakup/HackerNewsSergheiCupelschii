@@ -60,11 +60,10 @@ public class BestStoriesTests(WebApplicationFactory<Program> factory) : IClassFi
         var queryString = new QueryString($"?amountOfItems={amountOfItems}");
         var url = BaseUrl + queryString;
 
-        // Act & Assert
+        // Act
         var response = await _client.GetAsync(url);
 
         // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
-  
 }
